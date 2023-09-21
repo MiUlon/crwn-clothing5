@@ -33,7 +33,16 @@ const SignInForm = () => {
             console.log(response);
             resetFormFields();
         } catch (error) {
-            console.log('Error creating user: ', error.message);  
+            switch (error.code) {
+                case 'auth/user-not-found':
+                    alert('Email do not exists!');
+                    break;
+                case 'auth/wrong-password':
+                    alert('Password is incorrect!');
+                    break;
+                default:
+                    console.log('Error creating user: ', error.message);  
+            };
         };
     };
 
@@ -54,7 +63,7 @@ const SignInForm = () => {
 
                 <div className='buttons-container'>
                     <Button type='submit'>Sign Up</Button>
-                    <Button buttonTypes='google' onClick={signInGoogleUser}>Google sign in</Button>
+                    <Button type='button' buttonTypes='google' onClick={signInGoogleUser}>Google sign in</Button>
                 </div>
             </form>
         </div>
